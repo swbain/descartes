@@ -10,10 +10,10 @@ function init()
     redraw()
     grid_redraw()
       
-      crow.input[1].change = x_change
-      crow.input[1].mode("change", 2.0, 0.25, "both")
-      crow.input[2].change = y_change
-      crow.input[2].mode("change", 2.0, 0.25, "both")
+    crow.input[1].change = x_change
+    crow.input[1].mode("change", 2.0, 0.25, "both")
+    crow.input[2].change = y_change
+    crow.input[2].mode("change", 2.0, 0.25, "both")
 end
 
 function redraw()
