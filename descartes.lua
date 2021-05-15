@@ -6,14 +6,21 @@ local active_button = {1, 1}
 local width = 4
 local height = 4
 
+local active_step = 1
+local x_step = 1
+local y_step = 1
+
+local active_x = 1
+local active_y = 1
+
+local x_div = 1
+local y_div = 4
+
 function init() 
     redraw()
     grid_redraw()
-      
-    crow.input[1].change = x_change
-    crow.input[1].mode("change", 2.0, 0.25, "both")
-    crow.input[2].change = y_change
-    crow.input[2].mode("change", 2.0, 0.25, "both")
+
+    clock.run(tick)
 end
 
 function redraw()
@@ -25,7 +32,7 @@ end
 function grid_redraw() 
     for y = 1, height do
         for x = 1, width do
-            if x == active_button[1] and y == active_button[2] then
+            if x == active_x and y == active_y then
                 g:led(x, y, 13)
             else
                 g:led(x, y, 3)
@@ -35,16 +42,24 @@ function grid_redraw()
     g:refresh()
 end
 
-function x_change(v)
-    if v == 1 then
-        active_button[1] = active_button[1] % width + 1
+function tick()
+    while true do
+        clock.sync(1)
+        tick_x()
+        tick_y()
         grid_redraw()
     end
 end
 
-function y_change(v)
-    if v == 1 then
-        active_button[2] = active_button[2] % width + 1
-        grid_redraw()
+function tick_x()
+    if x_div == 1 then
+        active_x = active_x % 4 + 1
+    end
+end
+
+function tick_y()
+    y_step = y_step % y_div + 1
+    if y_step % y_div == 1 then
+        active_y = active_y % 4 + 1
     end
 end
