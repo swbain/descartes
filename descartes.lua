@@ -6,7 +6,6 @@ local active_button = {1, 1}
 local width = 4
 local height = 4
 
-local active_step = 1
 local x_step = 1
 local y_step = 1
 
