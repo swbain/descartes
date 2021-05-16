@@ -1,8 +1,6 @@
 
 g = grid.connect()
 
-local active_button = {1, 1}
-
 local width = 4
 local height = 4
 
