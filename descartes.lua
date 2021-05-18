@@ -1,10 +1,10 @@
+local Section = include("lib/section")
+local UI = require("ui")
 
-g = grid.connect()
+local g = grid.connect()
 
 local width = 4
 local height = 4
-
-local Section = include("lib/section")
 
 local sections = {
     Section:new(),
@@ -12,6 +12,9 @@ local sections = {
     Section:new { x_offset = 12, x_div = 1, y_div = 1 },
 }
 
+local titles = { "out 1", "out 2", "out 3" }
+
+local tabs = UI.Tabs.new(1, titles)
 
 function init()
     redraw()
@@ -19,12 +22,25 @@ function init()
     clock.run(tick)
 end
 
+function enc(n, d)
+    if n == 1 then
+        tabs:set_index_delta(d, false)
+    elseif n == 2 then
+        sections[tabs.index]:set_x_div_delta(d)
+    else
+        sections[tabs.index]:set_y_div_delta(d)
+    end
+    redraw()
+end
+
 function redraw()
     screen.clear()
+    tabs:redraw()
+    screen.level(15)
     screen.move(64, 32)
-    screen.text_center("x div = " .. sections[1].x_div)
+    screen.text_center("x div = " .. sections[tabs.index].x_div)
     screen.move(64, 44)
-    screen.text_center("y div = "  .. sections[1].y_div)
+    screen.text_center("y div = "  .. sections[tabs.index].y_div)
     screen.update()
 end
 
